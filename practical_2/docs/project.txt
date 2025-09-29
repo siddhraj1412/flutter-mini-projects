@@ -1,0 +1,94 @@
+# Mobile Application Development (AIML308) Practical Report
+
+## Technical Approach
+
+This Flutter app is a multiscreen application with login, dashboard (temperature converter), and profile screens. It uses `setState` for UI updates, `TextField` for user input with `double.tryParse` validation, and `Navigator` for routing. Core widgets include `StatefulWidget`, `TextField`, `ElevatedButton`, `Switch`, and `Scaffold`.
+
+## File Structure
+
+```
+lib/
+├── main.dart          # Main entry point of the Flutter app, sets up routes and app structure
+├── login.dart         # Login screen with TextField inputs for name and email, handles navigation to dashboard
+├── dashboard.dart     # Dashboard screen featuring temperature converter with Switch for mode toggle and conversion logic
+└── profile.dart       # Profile screen that displays user name and email retrieved from navigation arguments
+```
+
+## Key Code Snippets
+
+### Snippet 1: Login Navigation Logic (login.dart - onPressed in ElevatedButton)
+```dart
+ElevatedButton(
+  onPressed: () {
+    // Navigate to dashboard with user input as arguments
+    Navigator.pushReplacementNamed(
+      context,
+      '/dashboard',
+      arguments: {
+        'name': _nameController.text,
+        'email': _emailController.text,
+      },
+    );
+  },
+  child: const Text('Login and Go to Dashboard'),
+),
+```
+This snippet demonstrates navigation between screens using named routes and passing data via arguments, a key skill for multiscreen apps.
+
+### Snippet 2: Temperature Conversion Function (dashboard.dart - _convert)
+```dart
+void _convert() {
+  // Parse input and validate as number
+  double? input = double.tryParse(_tempController.text);
+  if (input == null) {
+    setState(() {
+      _result = 'Please enter a valid number';
+    });
+    return;
+  }
+  // Perform conversion based on toggle state
+  double output;
+  if (_isCtoF) {
+    output = (input * 9 / 5) + 32;
+    _result = '$input °C = ${output.toStringAsFixed(2)} °F';
+  } else {
+    output = (input - 32) * 5 / 9;
+    _result = '$input °F = ${output.toStringAsFixed(2)} °C';
+  }
+  // Update UI with result
+  setState(() {});
+}
+```
+This function showcases input validation, conditional logic for conversion, and UI update via `setState`, highlighting Dart functions' role in processing user actions.
+
+### Snippet 3: UI Update on Switch Toggle (dashboard.dart - onChanged in Switch)
+```dart
+Switch(
+  value: _isCtoF,
+  onChanged: (val) {
+    // Update state to toggle conversion mode
+    setState(() {
+      _isCtoF = val;
+    });
+  },
+),
+```
+This demonstrates immediate UI responsiveness using `setState` to reflect user interactions, a core mechanism for dynamic interfaces.
+
+### Snippet 4: Profile Data Display (profile.dart - build method)
+```dart
+final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+final name = username ?? args?['username'] ?? args?['name'] ?? 'No Name';
+final emailAddress = email ?? args?['email'] ?? 'No Email';
+// Display retrieved data
+Text('Name : $name', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+Text('Email : $emailAddress', style: const TextStyle(fontSize: 16)),
+```
+This snippet illustrates retrieving and displaying data passed between screens, emphasizing data flow in multiscreen apps.
+
+## Key Questions
+
+- **How to take and validate user input?** User input is captured using `TextField` widgets with controllers (e.g., `_tempController` in dashboard.dart). Validation is performed by parsing inputs with `double.tryParse` in the `_convert` function, displaying error messages via `setState` if invalid, ensuring only numeric values are processed for temperature conversion.
+- **What is the role of Dart functions?** Dart functions encapsulate reusable logic, such as the `_convert` function in dashboard.dart, which handles input validation, calculation, and UI updates. They enable modular code by separating concerns, like navigation in the login button's `onPressed` callback, allowing for clean, maintainable event handling and state management.
+- **How to update UI on user action?** UI updates are triggered using `setState` in stateful widgets, as seen in the Switch's `onChanged` callback and the `_convert` function in dashboard.dart, which rebuilds the widget tree to reflect changes like toggled modes or computed results, providing immediate visual feedback.</content>
+<parameter name="filePath">d:\SEM 5\AIML308_Mobile Application Development\PR_LIST\practical_2\docs\project.txt
