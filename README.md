@@ -9,12 +9,12 @@ Each project demonstrates core Flutter concepts, UI design, and functionality, s
 ## 📌 Table of Contents
 - [About](#-about)  
 - [Projects](#-projects)  
-- [Getting Started](#-getting-started)  
-- [Prerequisites](#prerequisites)  
-- [Installation](#installation)  
-- [Usage](#usage)  
-- [Contributing](#contributing)  
-- [Acknowledgements](#acknowledgements)  
+- [Getting Started](#%EF%B8%8F-getting-started)  
+- [Prerequisites](#-prerequisites)  
+- [Installation](#-installation)  
+- [Usage](#-usage)  
+- [Contributing](#-contributing)  
+- [Acknowledgements](#-acknowledgements)  
 
 ---
 
@@ -69,4 +69,44 @@ Follow these steps to set up your environment and run the projects.
 1. Clone the repository:  
    ```bash
    git clone https://github.com/siddhraj1412/flutter-mini-projects.git
-```
+
+2. Navigate to a project directory:
+   ```bash
+   cd flutter-mini-projects/<project_folder>
+
+3. Install dependencies:
+   ```bash
+   flutter pub get
+
+4. Run the app:
+   ```bash
+   flutter run
+
+⚠️ Each project has its own pubspec.yaml with specific dependencies.
+Check the project's README.md for additional setup details (e.g., API keys for the Weather App).
+
+## 🎯 Usage
+
+- Browse the project folders for specific instructions on running each app.
+
+- Experiment with the code to add new features or customize the UI.
+
+- Use these projects as a foundation for your own Flutter applications.
+
+## Contributing
+Contributions are encouraged! To add a new project, enhance existing ones, or fix issues:
+
+- Fork this repository.
+- Create a new branch (git checkout -b feature/your-feature).
+- Commit your changes (git commit -m "Add your feature").
+- Push to the branch (git push origin feature/your-feature).
+- Submit a Pull Request.
+
+Please ensure your code adheres to Flutter best practices and includes clear documentation.
+Acknowledgements
+
+## Flutter Documentation for comprehensive guides and resources.
+- Open-source communities for providing APIs and libraries used in these projects.
+- College instructors and peers for inspiration and feedback.
+
+Happy coding! 🚀
