@@ -4,10 +4,6 @@ This project demonstrates a basic Flutter application with multiple screens and 
 
 The app includes a login screen where a user enters a name, a dashboard that greets the user, and a profile screen that displays the user’s details. Both named routes and direct navigation are used to highlight Flutter’s flexible navigation system.  
 
-## Demo Video
-
-[Watch Demo Video](./media/practical1.mp4)
-
 ## Project Structure
 
 - `lib/main.dart` — App entry point, registers routes  
@@ -26,3 +22,4 @@ The app includes a login screen where a user enters a name, a dashboard that gre
 1. Install Flutter and connect an emulator or device  
 2. Run `flutter pub get` to install dependencies  
 3. Start the app with `flutter run`  
+
