@@ -103,9 +103,10 @@ Contributions are encouraged! To add a new project, enhance existing ones, or fi
 - Submit a Pull Request.
 
 Please ensure your code adheres to Flutter best practices and includes clear documentation.
-Acknowledgements
 
-## Flutter Documentation for comprehensive guides and resources.
+## Acknowledgements
+
+- Flutter Documentation for comprehensive guides and resources.
 - Open-source communities for providing APIs and libraries used in these projects.
 - College instructors and peers for inspiration and feedback.
 
