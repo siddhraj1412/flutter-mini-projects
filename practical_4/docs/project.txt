@@ -1,0 +1,107 @@
+# Mobile Application Development (AIML308) Practical 4 Report
+
+## Technical Approach
+This Flutter application implements a form-based registration system with validation, utilizing TextFormField for input handling and GlobalKey<FormState> for form state management. The core logic employs TextEditingController for accessing input values and custom validator functions to enforce data integrity. Key widgets include Form, TextFormField, Radio, and ElevatedButton, with navigation managed through named routes in MaterialApp.
+
+## File Structure
+```
+/// This file, project.txt, serves as a documentation of the project structure for a Flutter mobile application.
+/// It outlines the lib/ directory, which contains the core Dart files for the app's functionality.
+/// The structure includes:
+/// - main.dart: T
+/// - login.dart: Handles user authentication and login logic.
+/// - dashboard.dart:
+/// - profile.dart: 
+/// - todolist.dart:
+/// - feedback.dart: 
+lib/
+├── main.dart   #he entry point of the application.
+├── login.dart #Handles user authentication and login logic.
+├── dashboard.dart # Displays the main dashboard after login.
+├── profile.dart #Manages user profile information and settings.
+├── todolist.dart # Implements a to-do list feature for task management.
+└── feedback.dart #Allows users to provide feedback or submit reviews.
+```
+
+## Key Code Snippets
+
+### 1. Form Validation in Registration Screen (login.dart - _RegistrationScreenState.build)
+```dart
+Form(
+  key: _formKey,
+  child: Column(
+    children: [
+      TextFormField(
+        controller: _nameController,
+        decoration: InputDecoration(labelText: 'Name'),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter your name';
+          }
+          return null;
+        },
+      ),
+      // ... other fields
+      ElevatedButton(
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            // Navigate to dashboard
+          }
+        },
+        child: Text('Register'),
+      ),
+    ],
+  ),
+)
+```
+
+### 2. Controllers Usage in Feedback Form (feedback.dart - _FeedbackScreenState)
+```dart
+final TextEditingController _nameController = TextEditingController();
+final TextEditingController _emailController = TextEditingController();
+// ... other controllers
+
+TextFormField(
+  controller: _nameController,
+  decoration: InputDecoration(labelText: 'Name'),
+  // ... validator
+),
+```
+
+### 3. GlobalKey Usage for Form State (feedback.dart - _FeedbackScreenState)
+```dart
+final _formKey = GlobalKey<FormState>();
+
+Form(
+  key: _formKey,
+  child: // ... form fields
+),
+
+ElevatedButton(
+  onPressed: () {
+    if (_formKey.currentState!.validate()) {
+      // Submit form
+    }
+  },
+  child: Text('Submit'),
+),
+```
+
+### 4. Email Validation Regex (login.dart - email validator)
+```dart
+validator: (value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your email';
+  }
+  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+    return 'Please enter a valid email';
+  }
+  return null;
+},
+```
+
+## Key Questions
+
+- **How to perform form validation?** Use Form widget with GlobalKey<FormState>, wrap TextFormField in Form, define validator functions that return error strings or null, call _formKey.currentState!.validate() on submit to trigger validation and display errors.
+- **How to use controllers and keys?** Create TextEditingController instances for each TextFormField to access input values, use GlobalKey<FormState> assigned to Form widget to manage form state and trigger validation programmatically.
+- **What are common validation types?** Required field validation (check if empty), email format validation using regex, numeric validation with int.tryParse(), password strength (minimum length), field matching (confirm password), and custom length validation (e.g., phone number digits).
