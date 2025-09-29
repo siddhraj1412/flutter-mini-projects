@@ -1,0 +1,100 @@
+# Mobile Application Development (AIML308) Practical Report - Practical 1
+
+## Technical Approach
+
+- **State Management**: Uses StatefulWidget with setState() for UI updates in login and dashboard screens.
+- **Navigation**: Named routes in MaterialApp for screen transitions (pushReplacementNamed for login→dashboard, pushNamed for dashboard→profile).
+- **Data Passing**: Route arguments via ModalRoute.of(context) for passing user data between screens.
+- **Core Widgets**: Scaffold, TextField, ElevatedButton, Text; no external packages used.
+
+## File Structure
+
+```
+    lib/
+    ├── main.dart          # Application entry point with MaterialApp and route configuration
+    ├── login.dart         # Login screen with form inputs and navigation to dashboard
+    ├── dashboard.dart     # Dashboard screen displaying user data and navigation to profile
+    └── profile.dart       # Profile screen showing user details with back navigation
+```
+
+## Key Code Snippets
+
+### 1. Navigation with Data Passing (lib/login.dart - onPressed callback)
+```dart
+ElevatedButton(
+  onPressed: () {
+    Navigator.pushReplacementNamed(
+      context,
+      '/dashboard',
+      arguments: {
+        'name': _nameController.text,
+        'email': _emailController.text,
+      },
+    );
+  },
+  child: const Text('Login and Go to Dashboard'),
+),
+```
+// This snippet demonstrates how to navigate to a new screen using named routes while passing data as arguments, replacing the current screen in the navigation stack.
+
+### 2. Receiving Route Arguments (lib/dashboard.dart - build method)
+```dart
+@override
+Widget build(BuildContext context) {
+  final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+  final userName = args?['name'] ?? 'User';
+  // ... rest of build method
+}
+// This code shows how to extract data passed from the previous screen using ModalRoute.of(context), providing a safe way to access route arguments with null checking.
+
+### 3. Snackbar Display and Navigation (lib/dashboard.dart - onPressed callback)
+```dart
+ElevatedButton(
+  onPressed: () {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Welcome $userName'))
+    );
+    Navigator.pushNamed(
+      context,
+      '/profile',
+      arguments: {
+        'name': userName,
+        'email': args?['email'] ?? 'No Email',
+      },
+    );
+  },
+  child: const Text('Go to Profile'),
+),
+// This demonstrates combining UI feedback (snackbar) with navigation, passing user data to the next screen while keeping the current screen in the navigation stack.
+
+### 4. Back Navigation (lib/profile.dart - onPressed callback)
+```dart
+ElevatedButton(
+  onPressed: () {
+    Navigator.pop(context);
+  },
+  child: const Text('Back to Dashboard'),
+),
+// This shows how to navigate back to the previous screen using Navigator.pop(), which removes the current screen from the navigation stack.
+
+## Key Questions
+
+### How does navigation work in Flutter?
+
+- Navigation managed by Navigator widget using a stack of Route objects.
+- In this project: Named routes defined in MaterialApp (`main.dart`).
+- `pushReplacementNamed` (login → dashboard): Replaces current screen, passes arguments.
+- `pushNamed` (dashboard → profile): Adds to stack, allows return via `pop()`.
+
+### How can data be passed between screens?
+
+- Data passed via route arguments in RouteSettings.
+- Sender: Include Map in `arguments` parameter of navigation methods.
+- Receiver: Access via `ModalRoute.of(context)?.settings.arguments`.
+- Example: Login passes 'name' and 'email' to dashboard and profile.
+
+### What is the difference between push and pushReplacement?
+
+- `push()`: Adds new screen to navigation stack; allows back navigation.
+- `pushReplacement()`: Replaces current screen; removes from history.
+- Usage: `pushReplacementNamed` for login (no return), `pushNamed` for profile (allow back).
