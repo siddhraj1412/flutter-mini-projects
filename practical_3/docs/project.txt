@@ -1,0 +1,78 @@
+# Mobile Application Development (AIML308) Practical Report
+
+## Technical Approach
+This Flutter app implements a dynamic TODO list using setState for state management within StatefulWidget to handle UI updates efficiently. Core logic relies on Dart functions for task operations like adding, deleting, and filtering, with ListView.builder for rendering dynamic lists. Key widgets include TextField for input, DropdownButton for categories, Checkbox for completion, and Switch for filtering, ensuring responsive and interactive UI without external packages beyond Flutter's material library.
+
+## File Structure
+```
+lib/
+├── main.dart          # App entry point with route configuration
+├── login.dart         # Login screen with name and email input
+├── dashboard.dart     # Dashboard with user greeting and navigation
+├── profile.dart       # Profile screen displaying user details
+└── todolist.dart      # TODO list screen with dynamic task management
+```
+
+## Key Code Snippets
+
+### 1. Adding a Task (todolist.dart - _addTask function)
+```dart
+void _addTask() {
+  if (_taskController.text.isNotEmpty) {
+    setState(() {
+      tasks.add(Task(text: _taskController.text, category: selectedCategory));
+      _taskController.clear();
+    });
+  }
+}
+// Validates input and adds task to list, clearing input field
+```
+
+### 2. Deleting a Task (todolist.dart - _deleteTask function)
+```dart
+void _deleteTask(int index) {
+  setState(() {
+    tasks.removeAt(index);
+  });
+}
+// Removes task at specified index from the list
+```
+
+### 3. Filtering Tasks (todolist.dart - filteredTasks getter)
+```dart
+List<Task> get filteredTasks {
+  if (showCompletedOnly) {
+    return tasks.where((task) => task.completed).toList();
+  }
+  return tasks;
+}
+// Returns filtered list based on completion status
+```
+
+### 4. Toggling Task Completion (todolist.dart - _toggleCompleted function)
+```dart
+void _toggleCompleted(int index) {
+  setState(() {
+    tasks[index].completed = !tasks[index].completed;
+  });
+}
+// Toggles completion status and triggers UI rebuild
+```
+
+### 5. Task Model (todolist.dart - Task class)
+```dart
+class Task {
+  String text;
+  String category;
+  bool completed;
+
+  Task({required this.text, required this.category, this.completed = false});
+}
+// Defines task structure with text, category, and completion flag
+```
+
+## Key Questions
+
+- **How to add/delete items dynamically?** Items are added using tasks.add() in _addTask function with setState to update UI; deleted using tasks.removeAt(index) in _deleteTask, triggering rebuild.
+- **How does setState work?** setState marks the widget as dirty, notifying Flutter to rebuild the widget tree with updated state, ensuring UI reflects changes like task additions or completions.
+- **How to manage dynamic lists?** Use ListView.builder for efficient rendering of variable-length lists; update the underlying List<Task> with setState to reflect additions, deletions, or filters dynamically.
