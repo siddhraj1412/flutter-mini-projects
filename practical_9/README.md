@@ -63,9 +63,6 @@ practical__9/
         └── build.gradle.kts
 ```
 
-## Demo Video
-
-A demonstration video showing the complete authentication flow is available at: `media/PR_9.mp4`
 
 ## Learning Outcomes
 
@@ -77,3 +74,4 @@ This project demonstrates implementation of:
 - RESTful API development
 - MongoDB integration with Mongoose
 - Session persistence in mobile applications
+
