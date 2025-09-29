@@ -1,0 +1,72 @@
+# Mobile Application Development (AIML308) Practical Report
+## Practical 6: Notes App with Persistent Storage
+
+### Technical Approach
+This Flutter application implements a notes management system using SharedPreferences for local data persistence across app sessions. The core logic revolves around StatefulWidget for managing UI state changes with setState, SharedPreferences for storing user preferences and notes data, and JSON encoding/decoding for complex data serialization. Key widgets include ListView.builder for displaying the notes list, Form with TextFormField for input validation, and Material Design components for consistent theming and navigation between screens.
+
+### File Structure
+```
+lib/
+├── main.dart                     # Application entry point with theme management
+├── models/
+│   └── note.dart                # Note data model with JSON serialization
+├── screens/
+│   ├── login_screen.dart        # Login interface with remember me functionality
+│   ├── dashboard_screen.dart    # Notes list with dark mode toggle
+│   └── add_edit_note_screen.dart # Create/edit notes interface
+└── services/
+    └── preferences_service.dart  # SharedPreferences service layer
+```
+
+### Key Code Snippets
+
+#### 1. SharedPreferences Theme Storage (preferences_service.dart - setDarkMode)
+```dart
+Future<void> setDarkMode(bool isDark) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool(_keyDarkMode, isDark);  // Persists theme preference
+}
+```
+
+#### 2. Notes Data Persistence (preferences_service.dart - saveNotes)
+```dart
+Future<void> saveNotes(List<Note> notes) async {
+  final prefs = await SharedPreferences.getInstance();
+  final notesJson = notes.map((note) => json.encode(note.toJson())).toList();
+  await prefs.setStringList(_keyNotes, notesJson);  // Stores notes as JSON strings
+}
+```
+
+#### 3. Login State Management (preferences_service.dart - setLoggedIn)
+```dart
+Future<void> setLoggedIn(bool isLoggedIn) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool(_keyLoggedIn, isLoggedIn);  // Maintains session state
+}
+```
+
+#### 4. Form Validation (add_edit_note_screen.dart - _saveNote)
+```dart
+if (!_formKey.currentState!.validate()) {
+  return;  // Ensures title and content are provided before saving
+}
+```
+
+#### 5. ListView.builder Implementation (dashboard_screen.dart - _buildNotesList)
+```dart
+ListView.builder(
+  itemCount: _notes.length,
+  itemBuilder: (context, index) {
+    final note = _notes[index];
+    return Card(child: ListTile(title: Text(note.title)));  // Displays notes dynamically
+  },
+)
+```
+
+### Key Questions
+
+- **When to use shared preferences?** Use SharedPreferences for storing lightweight data that needs to persist across app sessions, such as user preferences (theme, language), session tokens, simple configuration flags, and small amounts of structured data under 1MB, as implemented in this notes app for theme settings, login state, and user credentials.
+
+- **What data types can be stored?** SharedPreferences supports primitive data types including booleans, strings, integers, doubles, and string lists, as demonstrated in the app where boolean values store theme preferences and login state, strings store usernames/passwords, and string lists store JSON-encoded notes data.
+
+- **How to persist small data?** Small data is persisted by obtaining a SharedPreferences instance, using appropriate setter methods (setBool, setString, setStringList) for different data types, and retrieving values with corresponding getter methods, ensuring data survives app restarts as shown in the PreferencesService class for theme, login, and notes storage.
