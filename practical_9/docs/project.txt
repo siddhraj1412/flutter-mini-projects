@@ -1,0 +1,152 @@
+# Mobile Application Development (AIML308) - Practical 9: Authentication App
+
+## Technical Approach
+
+This Flutter authentication application implements a client-server architecture using HTTP package for API communication and SharedPreferences for local session management. The core implementation uses StatefulWidget for dynamic UI updates with setState, FutureBuilder for handling asynchronous authentication checks, and TextField controllers for form input management. Authentication flow leverages JWT tokens for secure session handling, with bcrypt password hashing on the backend and JSON parsing for API responses, ensuring secure credential transmission and persistent login state across app restarts.
+
+## File Structure
+
+```
+// lib/main.dart: Main entry point of the Flutter application, responsible for initializing the app and setting up the initial route.
+// lib/home_screen.dart: Displays the home screen of the mobile app, likely containing navigation or main content.
+// lib/login_screen.dart: Provides the user interface for logging into the application, handling authentication input.
+// lib/profile_screen.dart: Shows the user's profile information and possibly settings or account management options.
+// lib/services/auth_service.dart: Contains authentication-related services, such as login, logout, and token management for the app.
+// lib/signup_screen.dart: Offers the signup form for new users to create accounts in the application.
+// backend/.env: Stores environment variables for the backend server, such as database credentials and API keys.
+// backend/.gitignore: Specifies files and directories to be ignored by Git version control in the backend project.
+// backend/check-db.js: Script to check or verify the database connection and possibly perform health checks.
+// backend/package.json: Defines the Node.js project dependencies, scripts, and metadata for the backend.
+// backend/package-lock.json: Locks the versions of installed npm packages to ensure consistent installations.
+// backend/server.js: Main server file for the Node.js backend, setting up the Express server and middleware.
+// backend/models/User.js: Defines the User model for the database, including schema and possibly methods for user data handling.
+// backend/routes/auth.js: Handles authentication routes, such as login, signup, and token validation endpoints.
+// backend/node_modules/: Directory containing installed npm packages and their dependencies for the backend.
+
+lib/
+├── main.dart
+├── home_screen.dart
+├── login_screen.dart
+├── profile_screen.dart
+├── services/
+│   └── auth_service.dart
+└── signup_screen.dart
+
+backend/
+├── .env
+├── .gitignore
+├── check-db.js
+├── package.json
+├── package-lock.json
+├── server.js
+├── models/
+│   └── User.js
+├── routes/
+│   └── auth.js
+└── node_modules/
+```
+
+## Key Code Snippets
+
+### 1. Authentication Service - Login Method (services/auth_service.dart)
+```dart
+Future<Map<String, dynamic>?> login(String email, String password) async {
+  try {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'password': password}),
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body); // JSON parsing
+      String token = responseData['token'];
+      Map<String, dynamic> user = responseData['user'];
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', token); // Token storage
+      await prefs.setString('userName', user['name']);
+      await prefs.setString('userEmail', user['email']);
+      await prefs.setString('userId', user['id']);
+
+      return {'success': true, 'message': 'Login successful'};
+    }
+  } catch (e) {
+    return {'success': false, 'message': 'Network error: $e'};
+  }
+  return null;
+}
+```
+
+### 2. Main App - Authentication State Check (main.dart)
+```dart
+home: FutureBuilder(
+  future: AuthService().isLoggedIn(),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const CircularProgressIndicator(); // Loading state
+    }
+    if (snapshot.data == true) {
+      return const HomeScreen();
+    }
+    return const LoginScreen();
+  },
+),
+```
+
+### 3. Login Screen - Async Authentication (login_screen.dart)
+```dart
+void _login() async {
+  setState(() => _isLoading = true);
+  final result = await _authService.login(
+    _emailController.text,
+    _passwordController.text,
+  );
+  setState(() => _isLoading = false);
+
+  if (result != null && result['success'] == true) {
+    Navigator.pushReplacementNamed(context, '/home');
+  } else {
+    String errorMessage = result?['message'] ?? 'Login Failed';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(errorMessage))
+    );
+  }
+}
+```
+
+### 4. Home Screen - User Data Loading (home_screen.dart)
+```dart
+_loadUserName() async {
+  final name = await authService.getUserName();
+  setState(() {
+    userName = name ?? 'User';
+  });
+}
+```
+
+### 5. Backend Authentication - JWT Token Verification (backend/routes/auth.js)
+```javascript
+const auth = (req, res, next) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded.user;
+    next();
+  } catch (err) {
+    res.status(401).json({ msg: 'Token is not valid' });
+  }
+};
+```
+
+## Key Questions
+
+- **How to send login credentials securely?** Credentials are sent via HTTPS POST requests with JSON payload containing email and password, using proper headers and secure token-based authentication with JWT for subsequent requests.
+- **How to store token/session?** JWT tokens and user data are stored locally using SharedPreferences, with automatic session restoration on app restart and complete cleanup on logout.
+- **How to handle invalid login?** Invalid login attempts return appropriate HTTP status codes (400) with error messages, which are parsed from JSON response and displayed to users via SnackBar notifications with user-friendly error text.</content>
+<parameter name="filePath">d:\SEM 5\AIML308_Mobile Application Development\PR_LIST\practical__9\docs\project.txt
