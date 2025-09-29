@@ -4,10 +4,6 @@ This project demonstrates a Flutter application with multiple screens and a func
 
 The app includes a login screen where users enter their name and email, a dashboard that greets the user and features a temperature converter tool, and a profile screen that displays the user's details. The temperature converter allows users to convert between Celsius and Fahrenheit with real-time calculations.
 
-## Demo Video
-
-[Watch Demo Video](./media/PR_2.mp4)
-
 ## Features
 
 - **Multi-screen Navigation**: Seamless navigation between login, dashboard, and profile screens
@@ -87,3 +83,4 @@ The temperature converter uses:
 - Formatted output with `toStringAsFixed(2)`
 
 This project serves as a practical example of combining Flutter's navigation capabilities with functional programming concepts and user input handling.
+
