@@ -60,4 +60,4 @@ All product images are stored in the `assets/` directory and properly configured
 **Problem Definition:** Design a Product Catalog App using GridView and custom cards with images
 **Key Skills:** UI design, Reusability, Grid layout
 **Learning Outcome:** Design reusable and responsive UI
-**Total Hours:** 2 hours
+**Total Time:** 2 hours
