@@ -14,7 +14,7 @@ Each project demonstrates core Flutter concepts, UI design, and functionality, s
 - [Installation](#-installation)  
 - [Usage](#-usage)  
 - [Contributing](#contributing)  
-- [Acknowledgements](#-acknowledgements)  
+- [Acknowledgements](#acknowledgements)  
 
 ---
 
