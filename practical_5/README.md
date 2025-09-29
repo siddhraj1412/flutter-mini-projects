@@ -89,7 +89,3 @@ This README draws structure and ideas from a form-validation sample (Practical 4
 
 ---
 
-If you want, I can:
-- Persist signup user data (so login survives app restarts) using the same SQLite database or `shared_preferences`.
-- Simplify or further strip UI elements to make the app even more minimal.
-- Add unit tests or basic integration tests for database operations.
