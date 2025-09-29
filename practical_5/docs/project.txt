@@ -1,0 +1,103 @@
+# AIML308 Mobile Application Development — Practical 5 Analytical Report
+
+## 1. Technical Approach
+
+This Student Records App is built using Flutter and demonstrates local data persistence, CRUD operations, and basic authentication. The core logic uses the `sqflite` package for SQLite database management, `shared_preferences` for simple user data persistence, and state management via `setState`. Main widgets include `StatefulWidget` for dynamic screens, `FutureBuilder` for async database queries, `ListView.builder` for displaying student lists, and `Form`/`TextFormField` for input validation. The app's navigation is managed with named routes, and all CRUD/database logic is encapsulated in a singleton helper class.
+
+## 2. File Structure (lib directory)
+
+```
+ This file (project.txt) outlines the directory structure of a Flutter mobile application project.
+ The project appears to be for a student management system with user authentication features.
+
+lib/
+├── main.dart - Entry point for the Flutter app, initializes the widget tree.
+├── database/
+│   └── database_helper.dart - Singleton class for SQLite CRUD operations on students and users.
+├── models/
+│   ├── student.dart - Student data model with properties and serialization.
+│   └── user_data.dart - User data model for authentication and profile info.
+└── screens/
+    ├── add_edit_student_screen.dart - Form screen for adding/editing students.
+    ├── login_screen.dart - Login screen with authentication.
+    ├── profile_screen.dart - User profile display/edit screen.
+    ├── signup_screen.dart - User registration screen.
+    └── student_list_screen.dart - List screen for viewing/editing/deleting students.
+
+
+lib/
+├── main.dart
+├── database/
+│   └── database_helper.dart
+├── models/
+│   ├── student.dart
+│   └── user_data.dart
+└── screens/
+    ├── add_edit_student_screen.dart
+    ├── login_screen.dart
+    ├── profile_screen.dart
+    ├── signup_screen.dart
+    └── student_list_screen.dart
+```
+
+## 3. Key Code Snippets
+
+### a. Database CRUD: Insert Student
+**File:** `lib/database/database_helper.dart` — `insertStudent`
+```dart
+// CREATE - Insert a new student record into SQLite
+db.insert('students', student.toMap());
+```
+
+### b. Async Data Display: FutureBuilder
+**File:** `lib/screens/student_list_screen.dart` — `build`
+```dart
+// Display students asynchronously from SQLite
+FutureBuilder<List<Student>>(
+  future: _studentsFuture,
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return CircularProgressIndicator();
+    }
+    // ...existing code...
+  },
+)
+```
+
+### c. Form Validation for Student Input
+**File:** `lib/screens/add_edit_student_screen.dart` — `_saveStudent`
+```dart
+// Validate and save student data
+if (!_formKey.currentState!.validate()) return;
+// ...existing code...
+```
+
+### d. User Data Persistence
+**File:** `lib/models/user_data.dart` — `setUserData`
+```dart
+// Save user signup data to SharedPreferences
+await prefs.setString('user_email', email);
+await prefs.setString('user_password', password);
+```
+
+### e. Search Students by Name
+**File:** `lib/screens/student_list_screen.dart` — `_searchStudents`
+```dart
+// Search students in SQLite by name
+_studentsFuture = _databaseHelper.searchStudents(searchTerm);
+```
+
+## 4. Key Questions — Point-to-Point Answers
+
+- **How to store, update, retrieve data locally?**
+  - Data is stored, updated, and retrieved using the `sqflite` package, with all CRUD operations implemented in `DatabaseHelper`. Student records are inserted, updated, deleted, and queried from a local SQLite database table (`students`).
+
+- **What is the role of FutureBuilder?**
+  - `FutureBuilder` is used to asynchronously fetch and display student records from the database, ensuring the UI updates automatically when data is loaded or changed.
+
+- **How to connect to SQLite?**
+  - The app connects to SQLite using the `sqflite` package. The database is initialized in `DatabaseHelper` with `openDatabase`, and all queries are performed using async methods (`insert`, `query`, `update`, `delete`).
+
+---
+
+This report covers the technical approach, file structure, key code, and answers to the practical's core questions for AIML308 Mobile Application Development Practical 5.
