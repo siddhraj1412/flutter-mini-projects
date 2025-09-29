@@ -71,7 +71,7 @@ The app includes a login screen where users enter their name and email, a dashbo
    - Use the switch to select conversion direction
    - Tap "Convert" to see the result
 4. **Profile**: Navigate to view your user information
-5. **Navigation**: Use the provided buttons to move between screens
+5. **Navigation**: Use the provided buttons to move between different pages of apps
 
 ## Technical Implementation
 
@@ -83,4 +83,5 @@ The temperature converter uses:
 - Formatted output with `toStringAsFixed(2)`
 
 This project serves as a practical example of combining Flutter's navigation capabilities with functional programming concepts and user input handling.
+
 
