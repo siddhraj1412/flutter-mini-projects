@@ -4,12 +4,6 @@
 
 **Problem Definition:** Create a Notes App with persistent storage using SharedPreferences, featuring multi-screen navigation (login, dashboard) and data persistence across app sessions.
 
-## App Demo
-
-![Notes App Demo](media/PR_6.mp4)
-
-Video demonstration of the app features including login, dark mode, notes CRUD operations, and persistent storage.
-
 ## Learning Objectives
 
 This Flutter mobile application demonstrates:
@@ -138,3 +132,4 @@ dependencies:
 ---
 
 This is an educational implementation focused on SharedPreferences usage. For production apps with large datasets, consider using SQLite, Hive, or other database solutions.
+
