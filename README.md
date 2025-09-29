@@ -7,9 +7,9 @@ Each project demonstrates core Flutter concepts, UI design, and functionality, s
 ---
 
 ## 📌 Table of Contents
-- [About](#about)  
-- [Projects](#projects)  
-- [Getting Started](#getting-started)  
+- [About](#-about)  
+- [Projects](#-projects)  
+- [Getting Started](#-getting-started)  
 - [Prerequisites](#prerequisites)  
 - [Installation](#installation)  
 - [Usage](#usage)  
