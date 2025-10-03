@@ -1,5 +1,4 @@
 //PRACTICAL 1 : Multiscreen Application Login and dashboard and profile 
-// By 23AIML010 OM CHOKSI 
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'dashboard.dart';
@@ -29,4 +28,5 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
+
 }
