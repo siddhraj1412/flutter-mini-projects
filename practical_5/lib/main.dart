@@ -1,5 +1,4 @@
 //PRACTICAL 5 : Student Records App with SQLite CRUD Operations
-// By 23AIML010 OM CHOKSI
 import 'package:flutter/material.dart';
 import 'screens/signup_screen.dart';
 import 'screens/login_screen.dart';
@@ -39,3 +38,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
