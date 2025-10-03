@@ -3,7 +3,6 @@
 // dashboard, and profile.
 //Design a Form-based Registration App with validation
 //using TextFormField.
-// By 23AIML010 OM CHOKSI
 
 import 'package:flutter/material.dart';
 import 'login.dart';
@@ -38,3 +37,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
