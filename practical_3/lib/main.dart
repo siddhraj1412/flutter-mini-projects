@@ -1,6 +1,5 @@
 //PRACTICAL 3 : Multiscreen Application Login and dashboard and profile and
 //                Temperature convertor app
-// By 23AIML010 OM CHOKSI
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'dashboard.dart';
@@ -32,3 +31,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
